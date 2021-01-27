@@ -2,6 +2,7 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 char *get_time()
 {
@@ -14,17 +15,34 @@ char *get_time()
     return asctime(timeinfo);
 }
 
+void delay(int number_of_seconds)
+{
+    time_t rawtime;
+    time(&rawtime);
+
+    time_t end_time = rawtime + number_of_seconds;
+
+    time_t current_time;
+
+    printf("Current time: %li \n", time(&current_time));
+    printf("End time: %li \n", end_time);
+
+    while (time(&current_time) != end_time)
+        ;
+}
+
 int main()
 {
     printf("Processo pai nasceu: %s \n", get_time());
     fflush(stdout);
 
     sleep(14);
+    //delay(30);
 
     pid_t pid_filho_1;
     pid_filho_1 = fork();
 
-    if (pid_filho_1)
+    if (!pid_filho_1)
     {
         printf("Filho 1 nasceu: %s \n", get_time());
         fflush(stdout);
@@ -34,7 +52,7 @@ int main()
         pid_t pid_neto_1;
         pid_neto_1 = fork();
 
-        if (pid_neto_1)
+        if (!pid_neto_1)
         {
             printf("Neto 1 nasceu: %s \n", get_time());
             fflush(stdout);
@@ -43,8 +61,6 @@ int main()
 
             printf("Neto 1 morreu: %s \n", get_time());
             fflush(stdout);
-
-            // kill(pid_neto_1, SIGTERM);
         }
         else
         {
@@ -55,6 +71,8 @@ int main()
 
             // kill(pid_filho_1, SIGTERM);
         }
+
+        return 0;
     }
     else
     {
@@ -63,7 +81,7 @@ int main()
         pid_t pid_filho_2;
         pid_filho_2 = fork();
 
-        if (pid_filho_2)
+        if (!pid_filho_2)
         {
             printf("Filho 2 nasceu: %s \n", get_time());
             fflush(stdout);
@@ -72,7 +90,7 @@ int main()
             pid_t pid_neto_2;
             pid_neto_2 = fork();
 
-            if (pid_neto_2)
+            if (!pid_neto_2)
             {
                 printf("Neto 2 nasceu: %s \n", get_time());
                 fflush(stdout);
