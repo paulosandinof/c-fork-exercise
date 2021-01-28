@@ -16,23 +16,6 @@ char *get_time()
     return asctime(timeinfo);
 }
 
-// Função de delay que pode ser útil
-void delay(int number_of_seconds)
-{
-    time_t rawtime;
-    time(&rawtime);
-
-    time_t end_time = rawtime + number_of_seconds;
-
-    time_t current_time;
-
-    printf("Current time: %li \n", time(&current_time));
-    printf("End time: %li \n", end_time);
-
-    while (time(&current_time) != end_time)
-        ;
-}
-
 int main()
 {
     // Criação pai
@@ -40,7 +23,6 @@ int main()
     fflush(stdout);
 
     sleep(14);
-    //delay(30);
 
     // Criação filho_1
     pid_t pid_filho_1;
