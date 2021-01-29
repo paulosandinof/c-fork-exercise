@@ -19,7 +19,10 @@ char *get_time()
 int main()
 {
     // Criação pai
-    printf("Processo pai nasceu: %s \n", get_time());
+    time_t father_time;
+    time(&father_time);
+
+    printf("Processo pai nasceu: %s", get_time());
     fflush(stdout);
 
     sleep(14);
@@ -48,17 +51,25 @@ int main()
         if (pid_neto_1 < 0)
         {
             printf("Erro");
-        } 
-         // Executa de neto_1
-        else if (pid_neto_1 == 0) 
+        }
+        // Executa de neto_1
+        else if (pid_neto_1 == 0)
         {
+            time_t grandson_time_1;
+            time(&grandson_time_1);
+
             printf("Neto 1 nasceu: %s \n", get_time());
             fflush(stdout);
 
             sleep(12);
 
-            printf("Neto 1 morreu: %s \n", get_time());
+            time_t grandson_death_time_1;
+            time(&grandson_death_time_1);
+
+            printf("Neto 1 morreu: %s depois de %.0f anos.\n", get_time(), difftime(grandson_death_time_1, grandson_time_1));
             fflush(stdout);
+
+            exit(8);
         }
         else
         // Volta para filho_1
@@ -75,7 +86,7 @@ int main()
     else
     {
         sleep(2);
-        
+
         // Criação filho_2
         pid_t pid_filho_2;
         pid_filho_2 = fork();
@@ -98,12 +109,12 @@ int main()
             pid_neto_2 = fork();
 
             // Checagem se neto_2 foi criado corretamente
-            if (pid_neto_2 < 0) 
+            if (pid_neto_2 < 0)
             {
-                printf ("Erro");
+                printf("Erro");
             }
             // Executa neto_2
-            else if (pid_neto_2 == 0 )
+            else if (pid_neto_2 == 0)
             {
                 printf("Neto 2 nasceu: %s \n", get_time());
                 fflush(stdout);
@@ -130,7 +141,10 @@ int main()
         // Volta para pai
         {
             sleep(44);
-            printf("Processo pai morreu: %s", get_time());
+            time_t father_death_time;
+            time(&father_death_time);
+
+            printf("Processo pai morreu: %f", difftime(father_death_time, father_time));
         }
     }
 
