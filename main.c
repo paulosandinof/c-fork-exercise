@@ -22,7 +22,7 @@ int main()
     time_t father_time;
     time(&father_time);
 
-    printf("Processo pai nasceu: %s", get_time());
+    printf("Processo Pai nasceu em %.24s.\n\n", get_time());
     fflush(stdout);
 
     sleep(14);
@@ -39,7 +39,10 @@ int main()
     // Executa de filho_1
     else if (pid_filho_1 == 0)
     {
-        printf("Filho 1 nasceu: %s \n", get_time());
+        time_t son_time_1;
+        time(&son_time_1);
+        
+        printf("Processo Filho 1 nasceu em %.24s. \n\n", get_time());
         fflush(stdout);
 
         sleep(12);
@@ -58,7 +61,7 @@ int main()
             time_t grandson_time_1;
             time(&grandson_time_1);
 
-            printf("Neto 1 nasceu: %s \n", get_time());
+            printf("Processo Neto 1 nasceu em %.24s. \n\n", get_time());
             fflush(stdout);
 
             sleep(12);
@@ -66,7 +69,7 @@ int main()
             time_t grandson_death_time_1;
             time(&grandson_death_time_1);
 
-            printf("Neto 1 morreu: %s depois de %.0f anos.\n", get_time(), difftime(grandson_death_time_1, grandson_time_1));
+            printf("Processo Neto 1 nasceu em xxx e morreu em %.24s aos %.0f anos.\n\n", get_time(), difftime(grandson_death_time_1, grandson_time_1));
             fflush(stdout);
 
             exit(8);
@@ -76,7 +79,10 @@ int main()
         {
             sleep(18);
 
-            printf("Filho 1 morreu: %s \n", get_time());
+            time_t son_death_time_1;
+            time(&son_death_time_1);
+
+            printf("Processo Filho 1 nasceu em xxx e morreu em %.24s aos %.0f anos.\n\n", get_time(), difftime(son_death_time_1, son_time_1));
             fflush(stdout);
 
             // kill(pid_filho_1, SIGTERM);
@@ -99,7 +105,10 @@ int main()
         // Executa filho_2
         else if (pid_filho_2 == 0)
         {
-            printf("Filho 2 nasceu: %s \n", get_time());
+            time_t son_time_2;
+            time(&son_time_2);
+
+            printf("Processo Filho 2 nasceu em %.24s. \n\n", get_time());
             fflush(stdout);
 
             sleep(14);
@@ -116,12 +125,18 @@ int main()
             // Executa neto_2
             else if (pid_neto_2 == 0)
             {
-                printf("Neto 2 nasceu: %s \n", get_time());
+                time_t grandson_time_2;
+                time(&grandson_time_2);
+
+                printf("Processo Neto 2 nasceu em %.24s. \n\n", get_time());
                 fflush(stdout);
 
                 sleep(18);
 
-                printf("Neto 2 morreu: %s \n", get_time());
+                time_t grandson_death_time_2;
+                time(&grandson_death_time_2);
+
+                printf("Processo Neto 2 nasceu em xxx e morreu em %.24s aos %.0f anos.\n\n", get_time(), difftime(grandson_death_time_2, grandson_time_2));
                 fflush(stdout);
 
                 // kill(pid_neto_2, SIGTERM);
@@ -131,7 +146,10 @@ int main()
             {
                 sleep(16);
 
-                printf("Filho 2 morreu: %s \n", get_time());
+                time_t son_death_time_2;
+                time(&son_death_time_2);
+
+            printf("Processo Filho 2 nasceu em xxx e morreu em %.24s aos %.0f anos.\n\n", get_time(), difftime(son_death_time_2, son_time_2));
                 fflush(stdout);
 
                 // kill(pid_filho_2, SIGTERM);
@@ -144,7 +162,7 @@ int main()
             time_t father_death_time;
             time(&father_death_time);
 
-            printf("Processo pai morreu: %f", difftime(father_death_time, father_time));
+            printf("Processo pai nasceu em xxx e morreu em %.24s aos %.0f anos.\n\n", get_time(), difftime(father_death_time, father_time));
         }
     }
 
